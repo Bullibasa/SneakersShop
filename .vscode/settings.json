@@ -1,0 +1,14 @@
+{
+  "oneDarkPro.editorTheme": "One Dark Pro",
+  "files.exclude": {
+    ".git": true,
+    ".vscode": true
+  },
+  "workbench.colorTheme": "One Monokai",
+  "workbench.iconTheme": "vscode-great-icons",
+  "workbench.preferredDarkColorTheme": "Default Dark+",
+  "workbench.preferredHighContrastColorTheme": "Default High Contrast",
+  "editor.semanticHighlighting.enabled": "configuredByTheme",
+  "workbench.colorCustomizations": {},
+  "editor.fontWeight": "normal"
+}

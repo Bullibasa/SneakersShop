@@ -7,7 +7,7 @@ function Drawer() {
           <img
             className="removeBtn cu-p"
             src="/img/btn-remove.svg"
-            alt="Remove"
+            alt="Close"
           />
         </h2>
 
