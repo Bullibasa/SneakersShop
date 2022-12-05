@@ -1,37 +1,32 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./components/Header"
 import Card from "./components/Card/Card"
 import Drawer from "./components/Drawer"
 
-const arr = [
-  {
-    title: "Мужские кроссовки Nike Blazer Mid Suede",
-    price: 12999,
-    imageUrl: "/img/sneakers/1.jpg",
-  },
-  {
-    title: "Мужские кроссовки Nike Blazer Mid Suede",
-    price: 15999,
-    imageUrl: "/img/sneakers/2.jpg",
-  },
-  {
-    title: "Мужские кроссовки Nike Blazer Mid Suede",
-    price: 8999,
-    imageUrl: "/img/sneakers/3.jpg",
-  },
-  {
-    title: "Мужские кроссовки Nike Blazer Mid Suede",
-    price: 10999,
-    imageUrl: "/img/sneakers/4.jpg",
-  },
-]
-
 function App() {
+  const [items, setItems] = useState([])
+  const [cartItems, setCartItems] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
+
+  useEffect(() => {
+    fetch("https://638e2dc04190defdb758b60d.mockapi.io/items")
+      .then((res) => {
+        return res.json()
+      })
+      .then((json) => {
+        setItems(json)
+      })
+  }, [])
+
+  const onAddToCart = (obj) => {
+    setCartItems(...cartItems, obj)
+  }
 
   return (
     <div className="wrapper clear">
-      {cartOpen && <Drawer onClose={() => setCartOpen(false)} />}
+      {cartOpen && (
+        <Drawer items={cartItems} onClose={() => setCartOpen(false)} />
+      )}
       <Header onClickCart={() => setCartOpen(true)} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
@@ -42,14 +37,14 @@ function App() {
           </div>
         </div>
 
-        <div className="d-flex">
-          {arr.map((obj) => (
+        <div className="d-flex flex-wrap">
+          {items.map((item) => (
             <Card
-              title={obj.title}
-              price={obj.price}
-              imageUrl={obj.imageUrl}
+              title={item.title}
+              price={item.price}
+              imageUrl={item.imageUrl}
               onClickFavorite={() => console.log("Добавили в избранное")}
-              onClickPlus={() => console.log("Добавили в корзину")}
+              onClickPlus={(obj) => onAddToCart(obj)}
             />
           ))}
         </div>
