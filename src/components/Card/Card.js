@@ -4,8 +4,12 @@ import styles from "./Card.module.scss"
 function Card({ title, price, imageUrl, onClickFavorite, onClickPlus }) {
   const [isAdd, setIsAdd] = useState(false)
 
+  // const deleteFromCart = () => {
+  //  cartItems()
+  // }
+
   const addToBasket = () => {
-    onClickPlus()
+    onClickPlus({ title, price, imageUrl })
     setIsAdd(!isAdd)
   }
 
