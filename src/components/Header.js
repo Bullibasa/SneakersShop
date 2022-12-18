@@ -10,12 +10,14 @@ function Header(props) {
       </div>
       <ul className="d-flex">
         <li className="mr-30 cu-p" onClick={props.onClickCart}>
-          <img width={18} height={18} alt="Cart" src="/img/cart.svg" />
+          <img width={18} height={18} alt="Корзина" src="/img/cart.svg" />
           <span>1205 руб.</span>
         </li>
+        <li className="mr-10 cu-p">
+          <img width={18} height={18} alt="Закладки" src="/img/heart.svg" />
+        </li>
         <li>
-          <img width={18} height={18} alt="Heart" src="/img/heart.svg" />
-          <img width={18} height={18} alt="User" src="/img/user.svg" />{" "}
+          <img width={18} height={18} alt="Пользователь" src="/img/user.svg" />
         </li>
       </ul>
     </header>

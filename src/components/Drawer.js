@@ -13,7 +13,7 @@ function Drawer({ onClose, items = [], onRemove }) {
         </h2>
 
         {items.length > 0 ? (
-          <div>
+          <>
             <div className="items">
               {items.map((obj) => (
                 <div className="cartItem d-flex align-center mb-20">
@@ -26,6 +26,7 @@ function Drawer({ onClose, items = [], onRemove }) {
                     <b>{obj.price}</b>
                   </div>
                   <img
+                    id={obj.id}
                     onClick={() => onRemove(obj.id)}
                     className="removeBtn"
                     src="/img/btn-remove.svg"
@@ -51,7 +52,7 @@ function Drawer({ onClose, items = [], onRemove }) {
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
-          </div>
+          </>
         ) : (
           <div
             className="cartEmpty d-flex
