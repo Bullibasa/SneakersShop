@@ -2,12 +2,29 @@ import Card from "../components/Card/Card"
 
 function Home({
   items,
+  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
   onAddToCart,
   onAddToFavorite,
+  isLoading,
 }) {
+  const renderItems = () => {
+    const filtredItems = items.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    )
+    return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
+      <Card
+        key={index}
+        onClickFavorite={(obj) => onAddToFavorite(obj)}
+        onClickPlus={(obj) => onAddToCart(obj)}
+        added={cartItems.some((obj) => Number(obj.id) === Number(item.id))} //ПРОБЛЕМА, ВЕЗДЕ РАЗНЫЕ ID И ПОКА ЧТО НЕ РАБОТАЕТ ИЗ-ЗА ТОГО, ЧТО РЕРЕНДОРИТСЯ СПИСОК ТОВАРОВ
+        loading={isLoading}
+        {...item}
+      />
+    ))
+  }
   return (
     <div className="content p-40">
       <div className="d-flex align-center justify-between mb-40">
@@ -32,20 +49,7 @@ function Home({
         </div>
       </div>
 
-      <div className="d-flex flex-wrap">
-        {items
-          .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <Card
-              key={index}
-              onClickFavorite={(obj) => onAddToFavorite(obj)}
-              onClickPlus={(obj) => onAddToCart(obj)}
-              {...item}
-            />
-          ))}
-      </div>
+      <div className="d-flex flex-wrap">{renderItems()}</div>
     </div>
   )
 }
