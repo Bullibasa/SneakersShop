@@ -3,7 +3,7 @@ import Card from "../components/Card/Card"
 import { AppContext } from "../App"
 
 function Favorites({ onAddToFavorite }) {
-  const { favorites } = useContext(AppContext)
+  const { cartItems, favorites } = useContext(AppContext)
 
   return (
     <div className="content p-40">
@@ -17,6 +17,7 @@ function Favorites({ onAddToFavorite }) {
             key={index}
             favorited={true}
             onClickFavorite={onAddToFavorite}
+            added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
             {...item}
           />
         ))}

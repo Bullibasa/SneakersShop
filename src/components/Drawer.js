@@ -1,14 +1,39 @@
 import { useState, useContext } from "react"
+import axios from "axios"
 import { AppContext } from "../App"
 import Info from "./Info"
 
-function Drawer({ onClose, items = [], onRemove }) {
-  const { setCartItems } = useContext(AppContext)
-  const [isOrderComplete, setIsOrderComplete] = useState(false)
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-  const onClickOrder = () => {
-    setIsOrderComplete(true)
-    setCartItems([])
+function Drawer({ onClose, items = [], onRemove }) {
+  const { cartItems, setCartItems } = useContext(AppContext)
+  const [isOrderComplete, setIsOrderComplete] = useState(false)
+  const [orderId, setOrderId] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true)
+      const { data } = await axios.post(
+        "https://63c42ac18067b6bef6d4e031.mockapi.io/orders",
+        { items: cartItems }
+      )
+
+      setOrderId(data.id)
+      setIsOrderComplete(true)
+      setCartItems([])
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i]
+        await axios.delete(
+          "https://638e2dc04190defdb758b60d.mockapi.io/cart/" + item.id //костыль для mockapi, удаляем отдельно каждый элемент из корзины (нет удаления всех элементов сразу)
+        )
+        await delay(1000)
+      }
+    } catch (error) {
+      alert("Ошибка при создании заказа :(")
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -63,7 +88,11 @@ function Drawer({ onClose, items = [], onRemove }) {
                   <b>1074 руб.</b>
                 </li>
               </ul>
-              <button onClick={onClickOrder} className="greenButton">
+              <button
+                disabled={isLoading}
+                onClick={onClickOrder}
+                className="greenButton"
+              >
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
@@ -73,7 +102,7 @@ function Drawer({ onClose, items = [], onRemove }) {
             title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"}
             description={
               isOrderComplete
-                ? "Ваш заказ скоро будет передан курьерской службе"
+                ? `Ваш заказ #${orderId} скоро будет передан курьерской службе доставки`
                 : "Добавьте хотя бы один товар, чтобы сделать заказ"
             }
             image={
