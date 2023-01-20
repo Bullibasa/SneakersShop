@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AppContext } from "../../App"
 import ContentLoader from "react-content-loader"
 import styles from "./Card.module.scss"
 
@@ -9,20 +10,19 @@ function Card({
   imageUrl,
   onClickPlus,
   onClickFavorite,
-  added = false,
   favorited = false,
   loading = false,
 }) {
-  const [isAdd, setIsAdd] = useState(added)
+  const { isItemAdded } = useContext(AppContext)
   const [isFavorite, setIsFavorite] = useState(favorited)
+  const obj = { id, parentId: id, title, price, imageUrl }
 
   const addToBasket = () => {
-    onClickPlus({ id, title, price, imageUrl })
-    setIsAdd(!isAdd)
+    onClickPlus(obj)
   }
 
   const onClickToFavorite = () => {
-    onClickFavorite({ id, title, price, imageUrl })
+    onClickFavorite(obj)
     setIsFavorite(!isFavorite)
   }
 
@@ -46,11 +46,13 @@ function Card({
       ) : (
         <>
           <div className={styles.favorite}>
-            <img
-              onClick={onClickToFavorite}
-              src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"}
-              alt="Unliked"
-            />
+            {onClickFavorite && (
+              <img
+                onClick={onClickToFavorite}
+                src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"}
+                alt="Unliked"
+              />
+            )}
           </div>
           <img width="90%" height={130} src={imageUrl} alt="sneakers" />
           <h5>{title}</h5>
@@ -59,12 +61,16 @@ function Card({
               <span>Цена:</span>
               <b>{price}</b>
             </div>
-            <img
-              className="button"
-              onClick={addToBasket}
-              src={added ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
-              alt="plus"
-            />
+            {onClickPlus && (
+              <img
+                className="button"
+                onClick={addToBasket}
+                src={
+                  isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"
+                }
+                alt="Plus"
+              />
+            )}
           </div>
         </>
       )}
