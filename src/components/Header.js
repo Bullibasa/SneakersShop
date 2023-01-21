@@ -37,7 +37,7 @@ function Header(props) {
             <img
               width={18}
               height={18}
-              alt="Закладки"
+              alt="Избранное"
               src="../SneakersShop/img/heart.svg"
             />
           </Link>
