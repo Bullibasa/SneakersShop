@@ -8,9 +8,14 @@ function Header(props) {
 
   return (
     <header className="header d-flex justify-between align-center p-40">
-      <Link to="/">
+      <Link to="SneakersShop">
         <div className="d-flex align-center">
-          <img width={40} height={40} alt="Логотип" src="/img/logo.png" />
+          <img
+            width={40}
+            height={40}
+            alt="Логотип"
+            src="../SneakersShop/img/logo.png"
+          />
           <div>
             <h3 className="text-uppercase">React sneakers</h3>
             <p className="opacity-5">Магазин лучших кроссовок</p>
@@ -19,21 +24,31 @@ function Header(props) {
       </Link>
       <ul className="d-flex">
         <li className="mr-30 cu-p" onClick={props.onClickCart}>
-          <img width={18} height={18} alt="Корзина" src="/img/cart.svg" />
+          <img
+            width={18}
+            height={18}
+            alt="Корзина"
+            src="../SneakersShop/img/cart.svg"
+          />
           <span>{totalPrice} руб.</span>
         </li>
         <li className="mr-10 cu-p">
-          <Link to="/favorites">
-            <img width={18} height={18} alt="Закладки" src="/img/heart.svg" />
+          <Link to="favorites">
+            <img
+              width={18}
+              height={18}
+              alt="Закладки"
+              src="../SneakersShop/img/heart.svg"
+            />
           </Link>
         </li>
         <li>
-          <Link to="/orders">
+          <Link to="orders">
             <img
               width={18}
               height={18}
               alt="Пользователь"
-              src="/img/user.svg"
+              src="../SneakersShop/img/user.svg"
             />
           </Link>
         </li>

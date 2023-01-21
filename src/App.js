@@ -136,7 +136,8 @@ function App() {
 
         <Routes>
           <Route
-            path="/"
+            exact
+            path="SneakersShop"
             element={
               <Home
                 items={items}
@@ -152,12 +153,14 @@ function App() {
           />
 
           <Route
-            path="/favorites"
+            exact
+            path="favorites"
             element={<Favorites onAddToFavorite={onAddToFavorite} />}
           />
 
           <Route
-            path="/orders"
+            exact
+            path="orders"
             element={<Orders onAddToFavorite={onAddToFavorite} />}
           />
         </Routes>

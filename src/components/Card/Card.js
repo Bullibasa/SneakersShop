@@ -49,7 +49,11 @@ function Card({
             {onClickFavorite && (
               <img
                 onClick={onClickToFavorite}
-                src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"}
+                src={
+                  isFavorite
+                    ? "../SneakersShop/img/liked.svg"
+                    : "../SneakersShop/img/unliked.svg"
+                }
                 alt="Unliked"
               />
             )}
@@ -66,7 +70,9 @@ function Card({
                 className="button"
                 onClick={addToBasket}
                 src={
-                  isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"
+                  isItemAdded(id)
+                    ? "../SneakersShop/img/btn-checked.svg"
+                    : "../SneakersShop/img/btn-plus.svg"
                 }
                 alt="Plus"
               />
